@@ -9,7 +9,15 @@
 #include "secret.h"
 #include "weather_icon.h"
 
+// Change pin you are connecting to
 #define PIN 13
+
+// Change the layout of the matrix
+#define TILE_WIDTH 6
+#define TILE_HEIGHT 2
+
+// Max is 255, 32 is a conservative value to not overload
+// a USB power supply (500mA) for 12x12 pixels.
 #define BRIGHTNESS 2
 
 #define RED   matrix->Color(200,  20,  20)
@@ -28,8 +36,8 @@ String weatherUrl = String("https://api.openweathermap.org/data/2.5/weather?q=")
 uint16_t millisCounter = 0;
 
 // Define full matrix width and height.
-#define mw 48
-#define mh 16
+#define mw TILE_WIDTH * 8
+#define mh TILE_HEIGHT * 8
 IRM_Mini *matrix = new IRM_Mini(
   8, 8, 6, 2, PIN,
   NEO_MATRIX_TOP  + NEO_MATRIX_LEFT +

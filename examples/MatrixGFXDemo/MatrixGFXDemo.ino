@@ -18,7 +18,7 @@
 #define BRIGHTNESS 2
 
 #define mw TILE_WIDTH * 8
-#define mh TILE_HEIGHT * 2
+#define mh TILE_HEIGHT * 8
 IRM_Mini *matrix = new IRM_Mini(
   8, 8, TILE_WIDTH, TILE_HEIGHT, PIN,
   NEO_MATRIX_TOP  + NEO_MATRIX_LEFT +
