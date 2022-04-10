@@ -1,5 +1,5 @@
 /*!
- * @file Adafruit_NeoMatrix.h
+ * @file IRM_Mini.h
  *
  * Arduino library to control single and tiled matrices of WS2811- and
  * WS2812-based RGB LED devices such as the Adafruit NeoPixel Shield or
@@ -30,8 +30,8 @@
  *
  */
 
-#ifndef _ADAFRUIT_NEOMATRIX_H_
-#define _ADAFRUIT_NEOMATRIX_H_
+#ifndef __IRM_MINI__
+#define __IRM_MINI__
 
 #if ARDUINO >= 100
 #include <Arduino.h>
@@ -41,6 +41,7 @@
 #endif
 #include <Adafruit_GFX.h>
 #include <Adafruit_NeoPixel.h>
+#include "ascii.h"
 
 // Matrix layout information is passed in the 'matrixType' parameter for
 // each constructor (the parameter immediately following is the LED type
@@ -76,10 +77,13 @@
 #define NEO_TILE_ZIGZAG 0x80      ///< Tile order reverses between lines
 #define NEO_TILE_SEQUENCE 0x80    ///< Bitmask for tile line order
 
+#define FONT7 7
+#define FONT5 5
+
 /**
  * @brief Class for using NeoPixel matrices with the GFX graphics library.
  */
-class Adafruit_NeoMatrix : public Adafruit_GFX, public Adafruit_NeoPixel {
+class IRM_Mini : public Adafruit_GFX, public Adafruit_NeoPixel {
 
 public:
   /**
@@ -92,7 +96,7 @@ public:
    * @param  ledType     NeoPixel LED type, similar to Adafruit_NeoPixel
    *                     constructor (e.g. NEO_GRB).
    */
-  Adafruit_NeoMatrix(int w, int h, uint8_t pin = 6,
+  IRM_Mini(int w, int h, uint8_t pin = 6,
                      uint8_t matrixType = NEO_MATRIX_TOP + NEO_MATRIX_LEFT +
                                           NEO_MATRIX_ROWS,
                      neoPixelType ledType = NEO_GRB + NEO_KHZ800);
@@ -110,7 +114,7 @@ public:
    * @param  ledType     NeoPixel LED type, similar to Adafruit_NeoPixel
    *                     constructor (e.g. NEO_GRB).
    */
-  Adafruit_NeoMatrix(uint8_t matrixW, uint8_t matrixH, uint8_t tX, uint8_t tY,
+  IRM_Mini(uint8_t matrixW, uint8_t matrixH, uint8_t tX, uint8_t tY,
                      uint8_t pin = 6,
                      uint8_t matrixType = NEO_MATRIX_TOP + NEO_MATRIX_LEFT +
                                           NEO_MATRIX_ROWS + NEO_TILE_TOP +
@@ -170,6 +174,21 @@ public:
    */
   static uint16_t Color(uint8_t r, uint8_t g, uint8_t b);
 
+  /**
+   * @brief  Pixel-drawing function for Adafruit_GFX.
+   * @param  x         Pixel column (0 = left edge, unless rotation used).
+   * @param  y         Pixel row (0 = top edge, unless rotation used).
+   * @param  text      ascii text to draw.
+   * @param  color     Pixel color in 16-bit '565' RGB format.
+   * @param  fontSize  Font size FONT5/FONT7 as 5/7 pixel height.
+   */
+  void drawAscii(uint16_t x, uint16_t y, char text, uint16_t color, uint8_t fontSize);
+  void drawAscii(uint16_t x, uint16_t y, char* text, uint16_t color, uint8_t fontSize);
+  void drawAscii(uint16_t x, uint16_t y, String text, uint16_t color, uint8_t fontSize);
+  void drawAscii(uint16_t x, uint16_t y, const char* text, uint16_t color, uint8_t fontSize);
+
+  void drawRGBBitmap(int16_t startx, int16_t starty, const uint32_t *bitmap, int16_t w, int16_t h, bool cover=false);
+
 private:
   const uint8_t type;
   const uint8_t matrixWidth, matrixHeight, tilesX, tilesY;
@@ -179,4 +198,4 @@ private:
   boolean passThruFlag = false;
 };
 
-#endif // _ADAFRUIT_NEOMATRIX_H_
+#endif // __IRM_MINI__
